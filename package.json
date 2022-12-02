@@ -12,7 +12,9 @@
     "@fastify/view": "^7.1.2",
     "fastify": "^4.10.2",
     "gcode-context": "^1.0.2",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "img2gcode": "^1.2.0",
+    "progress": "^2.0.3"
   },
   "engines": {
     "node": "14.x"

@@ -29,6 +29,10 @@ fastify.register(require("@fastify/view"), {
   },
 });
 
+var img2gcode = require("img2gcode");
+var ProgressBar = require("progress"); // npm install progress
+var bar = new ProgressBar("Analyze: [:bar] :percent :etas", { total: 100 });
+
 // Load and parse SEO data
 const seo = require("./src/seo.json");
 if (seo.url === "glitch-default") {
@@ -59,6 +63,40 @@ fastify.post("/", function (request, reply) {
 
   return reply.view("/src/pages/index.hbs", params);
 });
+
+fastify.post('/imgtogcode', function (request, reply) {
+  let params = { seo: seo };
+
+  img2gcode
+    .start({
+      // It is mm
+      toolDiameter: 1,
+      scaleAxes: 700,
+      deepStep: -1,
+      feedrate: { work: 1200, idle: 3000 },
+      whiteZ: 0,
+      blackZ: -2,
+      safeZ: 1,
+      info: "emitter", // "none" or "console" or "emitter"
+      dirImg: __dirname + "/public/test.png",
+    })
+    .on("log", (str) => {
+      console.log(str);
+    })
+    .on("tick", (perc) => {
+      bar.update(perc);
+    })
+    .then((data) => {
+      console.log(data.dirgcode);
+    });
+
+    params = {
+      seo: seo,
+    };
+
+    return reply.view("/src/pages/index.hbs", params);
+});
+
 
 // Run the server and report out to the logs
 fastify.listen(

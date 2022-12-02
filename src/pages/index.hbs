@@ -25,7 +25,14 @@
       <div class="content" role="main">
 
         <h1 class="title">Zen</h1>
-        <p><button id="export">Export</button></p>
+        <h3>{{gcode}}</h3>
+        <h3>{{config}}</h3>
+        <p>
+          <button id="export">Export</button>
+          <form action="/imgtogcode" method="POST">
+            <button id="imgtogcode">Img -> Gcode</button>
+          </form>
+        </p>
         <canvas id="canvas" style="display: block;">
         </canvas>
 
