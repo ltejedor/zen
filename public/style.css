@@ -32,3 +32,6 @@
     format("opentype");
 }
 
+#canvas {
+  border: 2px black solid;
+}
