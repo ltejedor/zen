@@ -11,6 +11,7 @@
     "@fastify/static": "^6.5.0",
     "@fastify/view": "^7.1.2",
     "fastify": "^4.10.2",
+    "gcode-context": "^1.0.2",
     "handlebars": "^4.7.7"
   },
   "engines": {

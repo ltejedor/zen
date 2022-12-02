@@ -1,6 +1,6 @@
 window.addEventListener('load', function () {
 
-  var canvas = document.getElementById('canvas');
+  canvas = document.getElementById('canvas');
   var context = canvas.getContext('2d');
 
   var radius = 5;  //不要犯蠢，第一次竟然打成0，根本就不會有東西跑出來啊
