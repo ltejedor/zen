@@ -26,6 +26,7 @@ window.addEventListener('load', function () {
   }
 
   var engage = function(e){
+    context.clearRect(0, 0, canvas.width, canvas.height);
   	dragging = true;
   	putPoint(e);
   }
