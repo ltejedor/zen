@@ -45,7 +45,7 @@ window.addEventListener('load', function () {
 })
 
 const element = document.getElementById("saveimg");
-element.addEventListener("click", myFunction);
+element.addEventListener("click", saveFunction);
 
 function fillCanvasBackgroundWithColor(canvas, color) {
   // Get the 2D drawing context from the provided canvas.
@@ -75,7 +75,7 @@ function fillCanvasBackgroundWithColor(canvas, color) {
   context.restore();
 }
 
-function myFunction() {
+function saveFunction() {
   // canvas = document.getElementById('canvas');
   // fillCanvasBackgroundWithColor(canvas, 'white');
   // const img = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream"); //Convert image to 'octet-stream' (Just a download, really)
@@ -100,10 +100,12 @@ function myFunction() {
 
   const link = document.createElement('a')
   link.href = img
-  link.download = 'test.png'
-  // link.download =  __dirname + "/public/test.png"
+  link.download = document.getElementById("savename").value+".png";
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
-  document.getElementById("textbox").innerHTML = "Saved!";
+  document.getElementById("imgtogcode").click();
+
+  document.getElementById("textbox").innerHTML = "Exported Gcode!";
+
 }

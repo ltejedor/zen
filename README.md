@@ -27,3 +27,7 @@ This project includes a Node.js server script and a web page that connects to it
 ← `src/pages/index.hbs`: This is the main page template for your site. The template receives parameters from the server script, which it includes in the page HTML. The page sends the user submitted color value in the body of a request, or as a query parameter to choose a random color.
 
 ← `src/seo.json`: When you're ready to share your new site or add a custom domain, change SEO/meta settings in here.
+
+## Testing Gcode
+
+https://ncviewer.com/ - copy and paste contents of gcode here

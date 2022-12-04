@@ -28,15 +28,17 @@
         <h1 class="title">Zen</h1>
         <h3>{{gcode}}</h3>
         <h3>{{config}}</h3>
-        <p>
-          {{!-- <button id="export">Export</button> --}}
-          <button id="saveimg" onclick="myFunction()">Save Img</button>
+        <p id="textbox"></p>
 
+        <p>
           <form action="/imgtogcode" method="POST">
-            <button id="imgtogcode">Convert Img -> Gcode</button>
+            <p id="textbox">Enter File Name (use a new one): 
+            <input type="text" id="savename" name="name">
+            </p>
+            <button id="imgtogcode" hidden></button>
             </form>
+          <button id="saveimg" onclick="saveFunction()">Save Img as GCode</button>
         </p>
-        <p id="textbox">Test</p>
         <canvas id="canvas" style="display: block;">
         </canvas>
         <canvas id="display_canvas">

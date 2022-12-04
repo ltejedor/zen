@@ -67,6 +67,9 @@ fastify.post("/", function (request, reply) {
 fastify.post('/imgtogcode', function (request, reply) {
   let params = { seo: seo };
 
+  // console.log("~/Downloads/"+request.body["name"]+".png");
+  filename = "/Users/wazeer/Downloads/"+request.body["name"]+".png"
+
   img2gcode
     .start({
       // It is mm
@@ -78,8 +81,8 @@ fastify.post('/imgtogcode', function (request, reply) {
       blackZ: -2,
       safeZ: 1,
       info: "emitter", // "none" or "console" or "emitter"
-      dirImg: __dirname + "/public/test.png",
-      // dirImg: "/Users/wazeer/Downloads/test.png",
+      // dirImg: __dirname + "/public/hello.png",
+      dirImg: filename,
     })
     .on("log", (str) => {
       console.log(str);
