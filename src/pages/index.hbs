@@ -21,6 +21,7 @@
 
   </head>
   <body>
+    
     <div class="wrapper">
       <div class="content" role="main">
 
@@ -28,12 +29,17 @@
         <h3>{{gcode}}</h3>
         <h3>{{config}}</h3>
         <p>
-          <button id="export">Export</button>
+          {{!-- <button id="export">Export</button> --}}
+          <button id="saveimg" onclick="myFunction()">Save Img</button>
+
           <form action="/imgtogcode" method="POST">
-            <button id="imgtogcode">Img -> Gcode</button>
-          </form>
+            <button id="imgtogcode">Convert Img -> Gcode</button>
+            </form>
         </p>
+        <p id="textbox">Test</p>
         <canvas id="canvas" style="display: block;">
+        </canvas>
+        <canvas id="display_canvas">
         </canvas>
 
       </div>

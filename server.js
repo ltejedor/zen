@@ -79,6 +79,7 @@ fastify.post('/imgtogcode', function (request, reply) {
       safeZ: 1,
       info: "emitter", // "none" or "console" or "emitter"
       dirImg: __dirname + "/public/test.png",
+      // dirImg: "/Users/wazeer/Downloads/test.png",
     })
     .on("log", (str) => {
       console.log(str);
@@ -96,7 +97,6 @@ fastify.post('/imgtogcode', function (request, reply) {
 
     return reply.view("/src/pages/index.hbs", params);
 });
-
 
 // Run the server and report out to the logs
 fastify.listen(
