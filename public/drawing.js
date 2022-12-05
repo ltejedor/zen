@@ -3,13 +3,13 @@ window.addEventListener('load', function () {
   canvas = document.getElementById('canvas');
   var context = canvas.getContext('2d');
 
-  var radius = 4;  //不要犯蠢，第一次竟然打成0，根本就不會有東西跑出來啊
+  var radius = 2;  //不要犯蠢，第一次竟然打成0，根本就不會有東西跑出來啊
   var start = 0; //起始點
   var end = Math.PI * 2;  //結束點
   var dragging = false;
 
-  canvas.width = 200;  //設定canvas的寬
-  canvas.height = 200;  //設定canvas的高
+  canvas.width = document.body.clientWidth;  //設定canvas的寬
+  canvas.height = document.body.clientHeight;  //設定canvas的高
 
   context.lineWidth = radius * 2;  //試著改變參數，會發現裡頭有線連著
 
@@ -19,6 +19,9 @@ window.addEventListener('load', function () {
   		context.stroke();
   		context.beginPath(); //請把這條beginPath到fill一起看
   		context.arc(e.offsetX, e.offsetY, radius, start, end);
+      context.fillStyle= '#999999'
+      context.strokeStyle= '#999999'
+
   		context.fill();  //填滿它
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
@@ -27,6 +30,7 @@ window.addEventListener('load', function () {
 
   var engage = function(e){
     context.clearRect(0, 0, canvas.width, canvas.height);
+    
   	dragging = true;
   	putPoint(e);
   }
@@ -39,7 +43,7 @@ window.addEventListener('load', function () {
   canvas.addEventListener('mousedown', engage);
   canvas.addEventListener('mousemove', putPoint);//當有人在canvas上mousedown時觸發putPoint
   canvas.addEventListener('mouseup', disengage);
-  document.getElementById("textbox").innerHTML = "Hello!";
+  // document.getElementById("textbox").innerHTML = "Hello!";
 
   
 })
@@ -68,7 +72,7 @@ function fillCanvasBackgroundWithColor(canvas, color) {
 
   // Fill in the background. We do this by drawing a rectangle
   // filling the entire canvas, using the provided color.
-  context.fillStyle = color;
+  context.fillStyle = '#ffffff33';
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   // Restore the original context state from `context.save()`

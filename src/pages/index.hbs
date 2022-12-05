@@ -1,51 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+	<head>
 
-    <!--
-      This is the main Handlebars template for the site
-      - When the user visits the homepage or submits a color the app calls the endpoints in server.js
-      - The server script passes data in here and the Handlebars code builds it into the HTML page
-    -->
+		<!--
+			This is the main Handlebars template for the site
+			- When the user visits the homepage or submits a color the app calls the endpoints in server.js
+			- The server script passes data in here and the Handlebars code builds it into the HTML page
+		-->
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{{seo.title}}</title>
+		<title>{{seo.title}}</title>
 
 
-    <!-- Import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
-    <script src="/drawing.js"></script>
-    <script src="/script.js"></script>
+		<!-- Import the webpage's stylesheet -->
+		<link rel="stylesheet" href="/style.css" />
+		<script src="/drawing.js"></script>
+		<script src="/script.js"></script>
 
-  </head>
-  <body>
-    
-    <div class="wrapper">
-      <div class="content" role="main">
+	</head>
+	<body>
+		
+		<div class="wrapper">
+			<div class="content" role="main">
+					
 
-        <h1 class="title">Zen</h1>
-        <h3>{{gcode}}</h3>
-        <h3>{{config}}</h3>
-        <p id="textbox"></p>
+				<h3>{{gcode}}</h3>
+				<h3>{{config}}</h3>
+				<p id="textbox"></p>
 
-        <p>
-          <form action="/imgtogcode" method="POST">
-            <p id="textbox">Enter File Name (use a new one): 
-            <input type="text" id="savename" name="name">
-            </p>
-            <button id="imgtogcode" hidden></button>
-            </form>
-          <button id="saveimg" onclick="saveFunction()">Save Img as GCode</button>
-        </p>
-        <canvas id="canvas" style="display: block;">
-        </canvas>
-        <canvas id="display_canvas">
-        </canvas>
+				<div class="form">
+					<form action="/imgtogcode" method="POST">
+						<input type="text" id="savename" name="name" placeholder="filename">
+						<button id="imgtogcode" hidden></button>
+					</form>
+					<button id="saveimg" onclick="saveFunction()">Save as GCode</button>
+				</div>
+				<canvas id="canvas" style="display: block;"></canvas>
+				<canvas id="display_canvas" hidden></canvas>
 
-      </div>
-    </div>
+				<img id="logo-small" src="/zenbot-corner-logo.svg" alt="ZenBot">
 
-  </body>
+			</div>
+		</div>
+
+		<div class="logo-container">
+			 <svg class="logo-large" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				 viewBox="0 0 1430.4 792" xml:space="preserve">
+			 <path class="large-st" d="M1436.1,476.7c-42.1-1.2-108.2-2.3-150.3-3.5c-23.8-0.7-48.2,1.8-70.5-6.7c-48.6-18.5-81.7-71.4-133.3-78.1
+				c-24.9-3.2-56.3,4.1-63.7,18.2s-5.1,24.1-5.1,24.1c0,31.6,17.1,44.6,40,44.6c6.6,0,13.8-0.8,20.9-2.8V447c-5.9,2.5-11.2,3.8-16,3.8
+				c-10.7,0-18.1-6.6-18.1-21.9V369h31.6v-24.2H1040v-45.9h-26.7v45.9c0,12.5-3.2,15.7-10.9,23.5l-4.1,2.6
+				c-12.4,8.8-28.2,11.2-43.4,10.9c-6.3-0.1-13.2-1-17.5-5.7c-4.7-5.2-4.6-15,0.9-19.3l2.7,0c34,0,52.6,23.3,52.6,59.4
+				c0,36.6-21.5,59.3-56,59.3c-34.7,0-56.3-22.7-56.3-59.3c0-25.9,11.3-45.2,30.2-54.1l0.4,0c6.4-1.1,12.8,3.5,15.3,9.5
+				c2.4,6,1.4,13-1.2,18.9c-2.7,5.9-6.9,11-11,16c-7,8.4-14.2,17-23.5,22.8c-6.4,4-13.6,6.5-20.8,8.7c-12.3,3.8-24.7,6.8-37.4,9.1
+				c-19.5,3.6-39.5,5.3-58.2,11.8c-7.7,2.7-15.2,6.1-22.9,8.8c-9.5,3.3-19.3,5.6-29.1,7.8l0.1,1.1h86.9c31.9,0,46.8-15,46.8-47.1
+				c0-17.6-7.5-38.8-43-40.1l-47.8,1.2l-0.3-20.4l48.1-0.8c23.9-1,37.6-8.6,37.6-32.1c0-25.5-16.1-40.1-44.1-40.1h-84.2v96.8l-4.2,22.6
+				L682,458.5c-4.5,4.9-8.7,8.9-12.6,11.9c-4.2,3.3-8.4,4.9-12.5,4.9c-3.3,0-5.3-1.5-6.3-2.7c-1.4-1.7-2.1-3.8-2.1-6.3
+				c0-3.8,1.2-7.7,3.5-11.7l32.2-55.8c1.8-3,2.7-6,2.7-8.7c0-3.2-1-5.8-3.1-7.9c-2-2.1-4.7-3.1-8.1-3.1c-2.4,0-4.7,0.5-6.7,1.4
+				c0,0-4.1,1.3-8.6,5.6s-5.7,7-8.2,10.8c-3.1,4.6-39.9,73.7-44.3,77.9c-1.2,1.1-0.9,2.1-2.3,1.4c-1.8-0.9-2-1.5-1.6-3.4l0.3-0.8
+				c0,0,49-83.5,47.6-88.5c-0.7-2.4-0.7-2.4-1.7-3.1c-1.1-0.8-2.6-1.2-4.6-1.2c-2.2,0-4.3,0.8-6.3,2.4c-2.3,1.9-5.5,5.1-9.3,9.6
+				c-1.1,1.4-2,2.4-2.7,3.2l-21.7,24.1l-3.2,4.2l-24.1,26.8c-8.6,9.5-16.2,16.5-22.4,20.7c-6,4-12.2,6.1-18.5,6.1
+				c-4.3,0-7.5-1.5-9.8-4.6c-2.5-3.3-4.8-7.1-4.8-11.6c0-7.2,2.2-14.4,4.7-21.7c2.4-7.2,6.9-12.8,10-18.9c10.6-21.2,29.3-43.1,48-40.2
+				c2.8,0.4,5.2,0.9,7.3,2.7c2,1.7,2.9,4,2.9,7.1c0,4.8-2.3,8.9-7,12.5c-5.1,3.9-11.1,7.2-18,9.6c-7,2.5-15.9,5.2-26.3,7.9l-6.7,1.9
+				c-16,0-17.6,30.8-35.8,46.3c-9.1,7.7-20.2,10.8-32.1,8.9c-16.9-2.6-31.8-10.4-45.6-20.5c-15.2-11.1-29.9-31.9-46.6-40.6
+				c-16.7-8.7-36.7-12.1-55.3-9.3c-11,1.7-21.6,6.2-30.3,13.1c-4.7,3.6-7.9,8.1-9.9,13.7c-1.4,4.1-2.5,10.7-1.8,15
+				c1.7,10.2,6,17.6,14.9,23.1c8.9,5.4,21.1,6.8,31,3.7l10.4-5.9c7.9-6,19.5-17.2,32.6-31.5l13.3-14.8l148.8-144.2l-5.7-0.8
+				c-13.1,4.5-26.7,7-37.8,7c-5.3,0-10.5-0.4-15.3-1.2c-4.8-0.8-10.9-2-18.2-3.6c-8-1.8-15.4-3.3-21.9-4.4c-6.4-1-13.7-1.6-21.5-1.6
+				c-11,0-20.6,2.4-28.8,7.1c-8.2,4.7-14.5,10.7-18.8,18c-4.3,7.2-6.4,14.6-6.4,22c0,8,1.7,15.1,5,21c3.3,5.9,7.9,10.4,13.7,13.6
+				c5.9,3.2,12.7,4.8,20.4,4.8l0.3,0c7.4,0,14.2-5.5,15.2-12.6s-3.1-14.3-9-18.5s-13.2-5.8-20.4-6.3c-24.9-1.7-49,9-70.8,21.1
+				c-45,25-85.7,57-128.9,85c-10.3,6.7-62.4,44.9-140.3,44.9H-4.5"/>
+			 </svg>
+
+		</div>
+	</body>
 </html>
