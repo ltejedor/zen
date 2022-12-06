@@ -7,7 +7,7 @@ window.addEventListener('load', function () {
   canvas = document.getElementById('canvas');
   var context = canvas.getContext('2d');
 
-  var radius = 2;  //不要犯蠢，第一次竟然打成0，根本就不會有東西跑出來啊
+  var radius = 2;  
   var start = 0; //起始點
   var end = Math.PI * 2;  //結束點
   var dragging = false;
@@ -43,6 +43,12 @@ window.addEventListener('load', function () {
       document.querySelector('#canvas').style.top= (Math.random() * anxiety  -anxiety/2)  + 'px'
       document.querySelector('#canvas').style.left = (Math.random() * anxiety -anxiety/2) + 'px'
 
+      // Making sure we are updating
+      textures.bumpMap.needsUpdate = true
+      topSand.material.bumpMap.needsUpdate = true
+      topSand.material.displacementMap.needsUpdate = true
+      console.log(topSand.material.bumpMap.needsUpdate)
+
   	}
   }
 
@@ -52,25 +58,27 @@ window.addEventListener('load', function () {
     gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
     gcode += "G01 Z1 ;X" + ( Math.round( e.offsetX / canvas.width * maxSize ) * -1 ) + " Y" + ( Math.round( e.offsetY / canvas.height * maxSize )) + " Z1 Line Init\n"
 
+    // Making sure we are updating
+    textures.bumpMap.needsUpdate = true
+    topSand.material.bumpMap.needsUpdate = true
+    topSand.material.displacementMap.needsUpdate = true
+    console.log(topSand.material.bumpMap.needsUpdate)
   	putPoint(e);
   }
 
   var disengage = function(){
   	dragging = false;
-    console.log(gcode)
+    // console.log(gcode)
 
   	context.beginPath();
   }
 
   canvas.addEventListener('mousedown', engage);
-  canvas.addEventListener('mousemove', putPoint);//當有人在canvas上mousedown時觸發putPoint
-  canvas.addEventListener('mouseup', disengage);
-  // document.getElementById("textbox").innerHTML = "Hello!";
-
-  
+  canvas.addEventListener('mousemove', putPoint);
+  canvas.addEventListener('mouseup', disengage);  
 })
 
-const element = document.getElementById("saveimg");
+let element = document.getElementById("saveimg");
 element.addEventListener("click", saveFunction);
 
 function fillCanvasBackgroundWithColor(canvas, color) {
