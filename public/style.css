@@ -46,7 +46,7 @@ input, button {
   padding: calc(var(--margin) / 2) var(--margin);
 }
 
-input:hover, button:hover  {
+input:hover, button:hover:enabled  {
   background: var(--highlight);
 }
 
