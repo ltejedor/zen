@@ -107,7 +107,7 @@ function saveFunction() {
     c.getContext('2d').drawImage(this, 0,0,this.width, this.height, 0,0,width, height);
     return c.toDataURL('image/png');
     }
-  const img = canvas.resizeAndExport(100, 100).replace("image/png", "image/octet-stream"); //Convert image to 'octet-stream' (Just a download, really)
+    const img = canvas.resizeAndExport(500, 500).replace("image/png", "image/octet-stream"); //Convert image to 'octet-stream' (Just a download, really)
 
   const link = document.createElement('a')
   link.href = img
@@ -115,8 +115,14 @@ function saveFunction() {
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
-  document.getElementById("imgtogcode").click();
+  // document.getElementById("imgtogcode").click();
+  document.getElementById("textbox").innerHTML =  "Exported to GCode!";
 
-  document.getElementById("textbox").innerHTML = "Exported Gcode!";
 
+  // fs.writeFile("CheckFS.png", canvas.)
+
+  // const data = canvas.toDataURL().replace(/^data:image\/\w+;base64,/, "");
+  
+  // const buf = Buffer.from(data, "base64");
+  // fs.writeFile("CheckFS.png", buf);  
 }
