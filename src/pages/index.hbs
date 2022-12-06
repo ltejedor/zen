@@ -30,24 +30,19 @@
 				<h3>{{config}}</h3>
 				<p id="textbox"></p>
 
-        <p>
-          <p id="textbox">Enter File Name:
+        <div class="form">
+          <p id="textbox">Enter File Name for Image: </p>
           <input type="text" id="savename" name="savename">
           <button id="saveimg" onclick="saveFunction()">Download Image</button>
-          </p>
-          <form action="/imgtogcode" method="POST">
-            <p id="textbox">Enter File Path of Downloaded Image: 
+         <form action="/imgtogcode" method="POST">
+            <p id="textbox">Enter File Path of Downloaded Image: </p>
             <input type="text" id="filepath" name="filepath">
             {{!-- <input type="file" id="input_file" name="input_file"  accept="image/png"> --}}
             <button id="imgtogcode">Convert to GCode</button>
             </form>
-            </p>
-        </p>
-        <canvas id="canvas" style="display: block;">
-        </canvas>
-        <canvas id="display_canvas">
-        </canvas>
+        </div>
 
+        <canvas id="canvas" style="display: block;"></canvas>
 				<img id="logo-small" src="/zenbot-corner-logo.svg" alt="ZenBot">
 
 			</div>
