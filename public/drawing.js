@@ -1,5 +1,7 @@
 let anxiety = 0.5;
 
+var gcode_contents = "Hello World!";
+
 window.addEventListener('load', function () {
 
   canvas = document.getElementById('canvas');
@@ -79,50 +81,37 @@ function fillCanvasBackgroundWithColor(canvas, color) {
 
   // Fill in the background. We do this by drawing a rectangle
   // filling the entire canvas, using the provided color.
-  context.fillStyle = '#ffffff33';
+  context.fillStyle = color;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   // Restore the original context state from `context.save()`
   context.restore();
 }
 
+// var img2gcode = require('img2gcode')
+const fs = require('fs')
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 function saveFunction() {
-  // canvas = document.getElementById('canvas');
-  // fillCanvasBackgroundWithColor(canvas, 'white');
-  // const img = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream"); //Convert image to 'octet-stream' (Just a download, really)
 
-  // const link = document.createElement('a')
-  // link.href = img
-  // link.download = 'test.png'
-  // document.body.appendChild(link)
-  // link.click()
-  // document.body.removeChild(link)
-
-  canvas = document.getElementById('canvas');
-  fillCanvasBackgroundWithColor(canvas, 'white');
-   canvas.resizeAndExport = function(width, height){
-    var c = document.createElement('canvas');
-    c.width = width;
-    c.height = height;
-    c.getContext('2d').drawImage(this, 0,0,this.width, this.height, 0,0,width, height);
-    return c.toDataURL('image/png');
-    }
-    const img = canvas.resizeAndExport(500, 500).replace("image/png", "image/octet-stream"); //Convert image to 'octet-stream' (Just a download, really)
-
-  const link = document.createElement('a')
-  link.href = img
-  link.download = document.getElementById("savename").value+".png";
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-  // document.getElementById("imgtogcode").click();
-  document.getElementById("textbox").innerHTML =  "Exported to GCode!";
+  filename = document.getElementById("savename").value;
+  if (filename.length>0){
+    savename = filename + ".gcode";
+    download(savename, gcode_contents)
+  }
 
 
-  // fs.writeFile("CheckFS.png", canvas.)
 
-  // const data = canvas.toDataURL().replace(/^data:image\/\w+;base64,/, "");
-  
-  // const buf = Buffer.from(data, "base64");
-  // fs.writeFile("CheckFS.png", buf);  
 }
