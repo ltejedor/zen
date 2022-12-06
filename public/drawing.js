@@ -1,6 +1,6 @@
 let anxiety = 0.5;
 let gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
-
+let maxSize = 420
 var gcode_contents = "Hello World!";
 
 window.addEventListener('load', function () {
@@ -31,8 +31,8 @@ window.addEventListener('load', function () {
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
       
-      let mmX = Math.round( e.offsetX / canvas.width * 420 ) * -1
-      let mmY = Math.round( e.offsetY / canvas.height * 420 )
+      let mmX = Math.round( e.offsetX / canvas.width * maxSize ) * -1
+      let mmY = Math.round( e.offsetY / canvas.height * maxSize )
 
       gcode += "G01 Z1 ;X" + mmX + " Y" + mmY + " Z1\n"
 
@@ -51,7 +51,7 @@ window.addEventListener('load', function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
   	dragging = true;
     gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
-    gcode += "G01 Z1 ;X" + e.offsetX + " Y" + e.offsetY + " Z1 Line Init\n"
+    gcode += "G01 Z1 ;X" + ( Math.round( e.offsetX / canvas.width * maxSize ) * -1 ) + " Y" + ( Math.round( e.offsetY / canvas.height * maxSize )) + " Z1 Line Init\n"
 
   	putPoint(e);
   }
