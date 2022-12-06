@@ -151,9 +151,13 @@ canvas[hidden] {
   /*animation: show 5s linear 1 forwards;*/
 }
 #logo-small {
-  height: 5vh;
+  height: 50px;
   margin:  var(--margin);
   user-select: none;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
 
 }
 
