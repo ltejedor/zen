@@ -3,6 +3,8 @@
 :root {
   --bg: #d9d9d9;
   --fg: #888;
+  --anxiety: 0.5px;
+
   --highlight: #aeff00;
   --wrapper-height: 100vh;
   --margin: 20px;
@@ -36,7 +38,7 @@ input, button {
   background: var(--bg);
 }
 input {
-  margin-bottom:  calc(var(--margin) / 2);
+  margin-bottom:  var(--margin) / 2);
 }
 
 input, button {
@@ -49,33 +51,34 @@ input:hover, button:hover  {
 }
 
 canvas {
-  /*animation: wiggle 5s linear infinite forwards;*/
+
+  animation: wiggle 1s linear infinite forwards;
 
 }
 canvas[hidden] {
   display: none !important;
 
 }
-@keyframes wiggle {
+/*@keyframes wiggle {
   0% {
     transform:  translate(0vw, 0vh);
   }
   20% {
-    transform:  translate(10px, 10px);
+    transform:  translate(var(--anxiety), var(--anxiety) );
   }
   40% {
-    transform:  translate(-10px, -10px);
+    transform:  translate(calc(-1*var(--anxiety)),calc(-1*var(--anxiety)));
   }
   60% {
-    transform:  translate(10px, -10px);
+    transform:  translate(var(--anxiety), calc(-1*var(--anxiety)));
   }
   80% {
-    transform:  translate(-10px, 10px);
+    transform:  translate(calc(-1*var(--anxiety)), var(--anxiety));
   }
   100% {
     transform:  translate(0vw, 0vh);
   }
-}
+}*/
 
 /* Import fonts */
 @font-face {
@@ -127,7 +130,7 @@ canvas[hidden] {
   overflow: hidden;
   background:  linear-gradient( var(--bg), var(--bg), var(--fg));
   animation:  hide 5s linear 1 forwards;
-  /*display: block;*/
+  display: none;
 }
 
 .logo-large {
@@ -143,11 +146,12 @@ canvas[hidden] {
   height: 100vh;
   overflow: hidden;
   background:  linear-gradient( var(--bg), var(--bg), var(--bg), var(--fg));
-  animation: show 5s linear 1 forwards;
+  /*animation: show 5s linear 1 forwards;*/
 }
 #logo-small {
   height: 5vh;
   margin:  var(--margin);
+  user-select: none;
 
 }
 
@@ -157,7 +161,7 @@ canvas[hidden] {
   bottom: 0;
   background: rgba(255, 255, 255, 0.01);
   backdrop-filter: blur(50px);
-  padding:  calc(var(--margin)*2) calc(var(--margin)*2) var(--margin) var(--margin);
+  padding: calc(var(--margin)*2) calc(var(--margin)*2) var(--margin) var(--margin);
   border-top-right-radius: 100px;
   border: 1px solid var(--fg);
   z-index: 900;

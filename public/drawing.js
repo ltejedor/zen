@@ -1,3 +1,5 @@
+let anxiety = 0.5;
+
 window.addEventListener('load', function () {
 
   canvas = document.getElementById('canvas');
@@ -25,12 +27,17 @@ window.addEventListener('load', function () {
   		context.fill();  //填滿它
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
+      anxiety*=1.005;
+      console.log(anxiety)
+      document.body.style.setProperty('--anxiety', anxiety + 'px');
+      document.querySelector('#canvas').style.top= (Math.random() * anxiety  -anxiety/2)  + 'px'
+      document.querySelector('#canvas').style.left = (Math.random() * anxiety -anxiety/2) + 'px'
+
   	}
   }
 
   var engage = function(e){
     context.clearRect(0, 0, canvas.width, canvas.height);
-    
   	dragging = true;
   	putPoint(e);
   }
