@@ -39,7 +39,7 @@ window.addEventListener('load', function () {
       anxiety*=1.005;
 
 
-      console.log(anxiety)
+      // console.log(anxiety)
       document.body.style.setProperty('--anxiety', anxiety + 'px');
       document.querySelector('#canvas').style.top= (Math.random() * anxiety  -anxiety/2)  + 'px'
       document.querySelector('#canvas').style.left = (Math.random() * anxiety -anxiety/2) + 'px'
