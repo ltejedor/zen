@@ -1,4 +1,5 @@
 let anxiety = 0.5;
+let gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
 
 window.addEventListener('load', function () {
 
@@ -15,19 +16,27 @@ window.addEventListener('load', function () {
 
   context.lineWidth = radius * 2;  //試著改變參數，會發現裡頭有線連著
 
-  var putPoint = function(e){
+  var putPoint = function(e) {
   	if(dragging){
+
   		context.lineTo(e.offsetX, e.offsetY);
   		context.stroke();
   		context.beginPath(); //請把這條beginPath到fill一起看
   		context.arc(e.offsetX, e.offsetY, radius, start, end);
       context.fillStyle= '#999999'
       context.strokeStyle= '#999999'
-
   		context.fill();  //填滿它
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
+      
+      let mmX = Math.round( e.offsetX / canvas.width * 420 ) * -1
+      let mmY = Math.round( e.offsetY / canvas.height * 420 )
+
+      gcode += "G01 Z1 ;X" + mmX + " Y" + mmY + " Z1\n"
+
       anxiety*=1.005;
+
+
       console.log(anxiety)
       document.body.style.setProperty('--anxiety', anxiety + 'px');
       document.querySelector('#canvas').style.top= (Math.random() * anxiety  -anxiety/2)  + 'px'
@@ -39,11 +48,16 @@ window.addEventListener('load', function () {
   var engage = function(e){
     context.clearRect(0, 0, canvas.width, canvas.height);
   	dragging = true;
+    gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
+    gcode += "G01 Z1 ;X" + e.offsetX + " Y" + e.offsetY + " Z1 Line Init\n"
+
   	putPoint(e);
   }
 
   var disengage = function(){
   	dragging = false;
+    console.log(gcode)
+
   	context.beginPath();
   }
 
