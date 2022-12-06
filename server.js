@@ -64,21 +64,33 @@ fastify.post("/", function (request, reply) {
   return reply.view("/src/pages/index.hbs", params);
 });
 
+fastify.get("/saveimage", function (request, reply) {
+  // params is an object we'll pass to our handlebars template
+  let params = { seo: seo };
+
+  // The Handlebars code will be able to access the parameter values and build them into the page
+  return reply.view("/src/pages/index.hbs", params);
+});
+
 fastify.post('/imgtogcode', function (request, reply) {
   let params = { seo: seo };
+
+  filename = request.body["filepath"]
+  console.log(filename);
 
   img2gcode
     .start({
       // It is mm
-      toolDiameter: 1,
-      scaleAxes: 700,
+      toolDiameter: 10,
+      scaleAxes: 500,
       deepStep: -1,
       feedrate: { work: 1200, idle: 3000 },
       whiteZ: 0,
-      blackZ: -2,
+      blackZ: -1,
       safeZ: 1,
       info: "emitter", // "none" or "console" or "emitter"
-      dirImg: __dirname + "/public/test.png",
+      // dirImg: __dirname + "/public/hello.png",
+      dirImg: filename,
     })
     .on("log", (str) => {
       console.log(str);
@@ -87,16 +99,16 @@ fastify.post('/imgtogcode', function (request, reply) {
       bar.update(perc);
     })
     .then((data) => {
-      console.log(data.dirgcode);
+      console.log("Saved at "+data.dirgcode);
     });
 
     params = {
       seo: seo,
     };
 
-    return reply.view("/src/pages/index.hbs", params);
+    // return reply.send({ filepath: 'world'});
+    // return reply.view("/src/pages/index.hbs", {params});
 });
-
 
 // Run the server and report out to the logs
 fastify.listen(

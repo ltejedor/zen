@@ -1,10 +1,14 @@
 
 /* Our default values set as CSS variables */
 :root {
-  --color-bg: #BDC9FF;
-  --color-text-main: #000000;
-  --color-primary: #AFECE0;
-  --wrapper-height: 87vh;
+  --bg: #d9d9d9;
+  --fg: #888;
+  --anxiety: 0.5px;
+
+  --highlight: #aeff00;
+  --wrapper-height: 100vh;
+  --margin: 20px;
+
   --image-max-width: 300px;
   --image-margin: 3rem;
   --font-family: "HK Grotesk";
@@ -14,10 +18,68 @@
 /* Basic page style resets */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color:  var(--fg);
+  border-color: var(--fg) !important;
+  /*background: var(--bg);*/
+  font-family: sans-serif;
+  transition: background 0.5s, color 0.5s, background-color 0.5s, border-color 0.5s;
 }
-[hidden] {
+*::focus  {
+  outline: none !important;
+  border:  none;
+  border-color: var(--highlight);
+}
+input, button {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 20px;
+  background: transparent;
+  /*background: var(--bg);*/
+}
+input {
+  margin-bottom:  calc(var(--margin) / 2);
+}
+
+input, button {
+  cursor: pointer;
+  padding: calc(var(--margin) / 2) var(--margin);
+}
+
+input:hover, button:hover  {
+  background: var(--highlight);
+}
+
+canvas {
+
+  animation: wiggle 1s linear infinite forwards;
+
+}
+canvas[hidden] {
   display: none !important;
+
 }
+/*@keyframes wiggle {
+  0% {
+    transform:  translate(0vw, 0vh);
+  }
+  20% {
+    transform:  translate(var(--anxiety), var(--anxiety) );
+  }
+  40% {
+    transform:  translate(calc(-1*var(--anxiety)),calc(-1*var(--anxiety)));
+  }
+  60% {
+    transform:  translate(var(--anxiety), calc(-1*var(--anxiety)));
+  }
+  80% {
+    transform:  translate(calc(-1*var(--anxiety)), var(--anxiety));
+  }
+  100% {
+    transform:  translate(0vw, 0vh);
+  }
+}*/
 
 /* Import fonts */
 @font-face {
@@ -33,5 +95,191 @@
 }
 
 #canvas {
-  border: 2px black solid;
+  border: none;
+  width: calc(50vmax - 200px);
+  height: calc(50vmax - 200px);
+  margin-top: calc(100px + (100vh - 50vmax)/2 );
+  margin-left: 100px;
+  position: relative;
+  z-index: 0;
+  background: transparent;
+  border: 1px solid var(--fg);
+  top: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+#threejs {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  mix-blend-mode: darken;
+}
+
+.small-st {
+  fill:none;
+  stroke:#999999;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:10;
+}
+
+.logo-container {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:  linear-gradient( var(--bg),  var(--highlight), var(--bg));
+  animation:  hide 5s linear 1 forwards;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:  linear-gradient( var(--bg),  var(--highlight), var(--bg));
+  animation: show 5s linear 1 forwards;
+}
+
+.logo-large {
+  min-width: 100%;
+  min-height: 100%;
+  width:  auto;
+  height: auto;
+  animation:  hide 5s linear 1 forwards;
+}
+
+#logo-small {
+  height: 50px;
+  margin:  var(--margin);
+  user-select: none;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+
+}
+
+.form {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /*background: rgba(255, 255, 255, 0.01);*/
+  /*backdrop-filter: blur(50px);*/
+  padding: calc(var(--margin)*2) var(--margin) calc(var(--margin)*2)  var(--margin);
+  /*border-top-right-radius: 100px;*/
+  /*border: 1px solid var(--fg);*/
+  z-index: 900;
+  user-select: none;
+}
+
+
+.progress-bar {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 888;
+  border-top: 1px solid var(--fg);
+}
+
+.bar {
+  position: relative;
+  background: var(--highlight);
+  height: 10px;
+  display: block;
+  float: left;
+  min-width: 10px;
+  width: auto;
+  border-right: 1px solid var(--fg);
+  /*transition: width 0.25s;*/
+}
+
+
+
+svg {
+  background: transparent;
+}
+
+
+.large-st {
+  fill:none;
+  stroke: #999999;
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:10;
+  stroke-dasharray: 5000;
+  stroke-dashoffset:  5000;
+  animation: dash 5s linear 1 forwards;
+}
+
+
+@keyframes show {
+  0% {
+    opacity: 0%;
+  }
+  70% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes hide {
+  0% {
+    display: block;
+  }
+  70% {
+    opacity: 100%;
+  }
+ 
+  100% {
+    z-index: -10;
+    display: none !important;
+    visibility: hidden;
+    opacity: 0%;
+  }
+}
+
+
+
+@keyframes dash {
+  65% {
+    stroke-dashoffset: 10000;
+    stroke-width:  5px;
+    stroke:  var(--fg);
+
+  }
+  70% {
+    stroke-dashoffset: 10000;
+    stroke-width:  5px;
+    /*opacity: 100%;*/
+
+  }
+
+  99% {
+    stroke-dashoffset: 10000;
+    stroke-width:  1000px;
+
+    /*opacity: 0;*/
+  }
+  100% {
+    display: none !important;
+
+  }
 }
