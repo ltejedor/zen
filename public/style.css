@@ -132,7 +132,7 @@ canvas[hidden] {
   overflow: hidden;
   background:  linear-gradient( var(--bg), var(--bg), var(--fg));
   animation:  hide 5s linear 1 forwards;
-  display: none;
+  /*display: none;*/
 }
 
 .logo-large {
@@ -148,7 +148,7 @@ canvas[hidden] {
   height: 100vh;
   overflow: hidden;
   background:  linear-gradient( var(--bg), var(--bg), var(--bg), var(--fg));
-  /*animation: show 5s linear 1 forwards;*/
+  animation: show 5s linear 1 forwards;
 }
 #logo-small {
   height: 50px;
