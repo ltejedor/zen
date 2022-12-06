@@ -1,7 +1,7 @@
-const gui = new dat.GUI({ closed: false, width: 200 });
-const colorFolder = gui.addFolder("Sand Color");
-const displaceFolder = gui.addFolder("Displacement");
-const lightFolder = gui.addFolder("Light");
+// const gui = new dat.GUI({ closed: false, width: 200 });
+// const colorFolder = gui.addFolder("Sand Color");
+// const displaceFolder = gui.addFolder("Displacement");
+// const lightFolder = gui.addFolder("Light");
 
 
 var drawingCanvas = document.getElementById('canvas');
@@ -9,8 +9,8 @@ var drawingContext = drawingCanvas.getContext('2d');
 
 const debugObject = {
   sandDepthColor: "#1e4d40",
-  sandSurfaceColor: "#ded5ca",
-  sandBottomColor: "#beaaa3",
+    sandSurfaceColor: "#8c807c",
+    sandBottomColor: "#beaaa3",
   displacementScale: 0.01,
   verteces: 500,
 };
@@ -19,6 +19,8 @@ const BACKGROUND_COLOR = 0xf1f1f1;
 const SAND_MODEL_PATH = "models/sand.glb"
 const BOARD_MODEL_PATH = "models/zen-board.glb"
 var loader = new THREE.GLTFLoader();
+let cvSize = Math.min( document.body.clientHeight, document.body.clientWidth )
+
 
 // Textures
 const textures = {
@@ -39,7 +41,6 @@ const textures = {
 
 };
 
-
 /* Scene */
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(BACKGROUND_COLOR);
@@ -48,14 +49,15 @@ scene.fog = new THREE.Fog(BACKGROUND_COLOR, 20, 100);
 // The camera
 const camera = new THREE.PerspectiveCamera(
   20,
-  window.innerWidth / window.innerHeight,
+  window.innerWidth / window.innerWidth,
   1,
   10000
 );
 
+
 // The renderer: something that draws 3D objects onto the canvas
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha:true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize( cvSize, cvSize);
 renderer.setClearColor( 0x000000, 0 ); // the default
 renderer.shadowMap.enabled = true;
 renderer.domElement.id = "threejs"
@@ -64,12 +66,9 @@ renderer.domElement.id = "threejs"
 // Append the renderer canvas into <body>
 document.body.appendChild(renderer.domElement);
 
-/* Models */
-
 // Load Zen Board Model
 loader.load(BOARD_MODEL_PATH, function(gltf) {
   theModel = gltf.scene;
-
   theModel.castShadow = true;
   theModel.receiveShadow = true;
 
@@ -106,12 +105,12 @@ let topSand = {
   geometry: new THREE.PlaneGeometry(2, 2, debugObject.verteces, debugObject.verteces),
   material: new THREE.MeshPhongMaterial({
     color: debugObject.sandSurfaceColor,
-    roughness:textures.sandRoughness,
+    roughness:textures.bumpMap,
     displacementMap: textures.displacementMap,
     displacementScale: debugObject.displacementScale,
     displacementBias: -.01, 
     bumpMap: textures.bumpMap,
-    normalMap: textures.sandNormal,
+    // normalMap: textures.sandNormal,
     normalScale: new THREE.Vector2( 1, 0 ),
     })
 };
@@ -182,49 +181,52 @@ var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 
 
+
 // Make the camera further from the cube so we can see it better
 camera.position.z = 0;
 camera.position.y = 10;
+
 camera.rotation.x = -1*Math.PI / 2;
+camera.rotation.y = -1*Math.PI;
 
 /* GUI */
 // Surface Color
 
-colorFolder
-  .addColor(debugObject, "sandSurfaceColor")
-  .onChange(() => {
-topSand.material.color.setHex(debugObject.sandSurfaceColor.replace("#", "0x"));
-  });
-colorFolder
-  .addColor(debugObject, "sandBottomColor")
-  .onChange(() => {
-    bottomSand.material.color
-      .setHex(debugObject.sandBottomColor.replace("#", "0x"));
-  });
+// colorFolder
+  // .addColor(debugObject, "sandSurfaceColor")
+//   .onChange(() => {
+// topSand.material.color.setHex(debugObject.sandSurfaceColor.replace("#", "0x"));
+//   });
+// colorFolder
+//   .addColor(debugObject, "sandBottomColor")
+//   .onChange(() => {
+//     bottomSand.material.color
+//       .setHex(debugObject.sandBottomColor.replace("#", "0x"));
+//   });
 
-// Displacement
-displaceFolder
-  .add(topSand.material, 'displacementBias', -1, 1, 0.01)
-  .name("Bias")
-displaceFolder
-  .add(topSand.material, 'displacementScale', -1, 1, 0.01)
-  .onChange(() => {updateMaterial(topSand)})
-  .name("Scale")
-displaceFolder
-  .open()
+// // Displacement
+// displaceFolder
+//   .add(topSand.material, 'displacementBias', -1, 1, 0.01)
+//   .name("Bias")
+// displaceFolder
+//   .add(topSand.material, 'displacementScale', -1, 1, 0.01)
+//   .onChange(() => {updateMaterial(topSand)})
+//   .name("Scale")
+// displaceFolder
+//   .open()
 
-// Light
-lightFolder.add(dirLight.position, 'x', 0, 15)
-lightFolder.add(dirLight.position, 'y', 0, 15)
-lightFolder.add(dirLight.position, 'z', 0, 15)
-lightFolder.add(dirLight, 'intensity', 0, 5, 0.01)
-           .name("Dir intsty")
-lightFolder.add(hemiLight, 'intensity', 0, 5, 0.01)
-           .name("Hemi intsty")
-lightFolder.open()
+// // Light
+// lightFolder.add(dirLight.position, 'x', 0, 15)
+// lightFolder.add(dirLight.position, 'y', 0, 15)
+// lightFolder.add(dirLight.position, 'z', 0, 15)
+// lightFolder.add(dirLight, 'intensity', 0, 5, 0.01)
+//            .name("Dir intsty")
+// lightFolder.add(hemiLight, 'intensity', 0, 5, 0.01)
+//            .name("Hemi intsty")
+// lightFolder.open()
 
 
-
+let inc = 0
 
 function updateMaterial(object) {
     object.material.side = Number(object.material.side)
@@ -237,13 +239,14 @@ function render() {
   renderer.render(scene, camera);
   controls.update();
   updateMaterial(topSand)
+  camera.rotation.z = inc;
+  inc += 0.001
+  // inc*anxiety/maxSize
 
 //plane.mesh.rotation.x += 0.0001
-  
+
   // Make it call the render() function about every 1/60 second
   requestAnimationFrame(render);
-
-  
 }
 
 render();

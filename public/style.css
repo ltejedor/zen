@@ -35,10 +35,11 @@ input, button {
   border-style: solid;
   border-width: 1px;
   border-radius: 20px;
-  background: var(--bg);
+  background: transparent;
+  /*background: var(--bg);*/
 }
 input {
-  margin-bottom:  var(--margin) / 2);
+  margin-bottom:  calc(var(--margin) / 2);
 }
 
 input, button {
@@ -95,19 +96,27 @@ canvas[hidden] {
 
 #canvas {
   border: none;
-  width: 100vmin;
-  height: 100vmin;
-  
+  width: calc(50vmax - 200px);
+  height: calc(50vmax - 200px);
+  margin-top: calc(100px + (100vh - 50vmax)/2 );
+  margin-left: 100px;
   position: relative;
   z-index: 0;
   background: transparent;
   border: 1px solid var(--fg);
   top: 0;
-  margin-left: 25%;
+  left: 0;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+#threejs {
+  position: absolute;
+  z-index: 0;
+  top: 0;
   bottom: 0;
   right: 0;
-  z-index: 1;
-
+  mix-blend-mode: darken;
 }
 
 .small-st {
@@ -130,9 +139,16 @@ canvas[hidden] {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background:  linear-gradient( var(--bg), var(--bg), var(--fg));
+  background:  linear-gradient( var(--bg),  var(--highlight), var(--bg));
   animation:  hide 5s linear 1 forwards;
-  display: none;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:  linear-gradient( var(--bg),  var(--highlight), var(--bg));
+  animation: show 5s linear 1 forwards;
 }
 
 .logo-large {
@@ -143,13 +159,6 @@ canvas[hidden] {
   animation:  hide 5s linear 1 forwards;
 }
 
-.wrapper {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background:  linear-gradient( var(--bg), var(--bg), var(--bg), var(--fg));
-  /*animation: show 5s linear 1 forwards;*/
-}
 #logo-small {
   height: 50px;
   margin:  var(--margin);
@@ -158,6 +167,7 @@ canvas[hidden] {
   z-index: 1;
   left: 0;
   top: 0;
+  pointer-events: none;
 
 }
 
@@ -165,24 +175,39 @@ canvas[hidden] {
   position: absolute;
   left: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.01);
-  backdrop-filter: blur(50px);
-  padding: calc(var(--margin)*2) calc(var(--margin)*2) var(--margin) var(--margin);
-  border-top-right-radius: 100px;
-  border: 1px solid var(--fg);
+  /*background: rgba(255, 255, 255, 0.01);*/
+  /*backdrop-filter: blur(50px);*/
+  padding: calc(var(--margin)*2) var(--margin) calc(var(--margin)*2)  var(--margin);
+  /*border-top-right-radius: 100px;*/
+  /*border: 1px solid var(--fg);*/
   z-index: 900;
   user-select: none;
 }
 
-#threejs {
-  position: absolute;
-  z-index: 0;
 
-  top: 0;
-  left:  0;
+.progress-bar {
+  position: absolute;
+  width: 100%;
+  height: 10px;
   bottom: 0;
   right: 0;
+  left: 0;
+  z-index: 888;
+  border-top: 1px solid var(--fg);
 }
+
+.bar {
+  position: relative;
+  background: var(--highlight);
+  height: 10px;
+  display: block;
+  float: left;
+  min-width: 10px;
+  width: auto;
+  border-right: 1px solid var(--fg);
+  /*transition: width 0.25s;*/
+}
+
 
 
 svg {

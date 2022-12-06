@@ -1,117 +1,166 @@
 let anxiety = 0.5;
-let gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
+let gcodeHeader = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
+let gcode = gcodeHeader
 let maxSize = 420
+
+let calmingDown = false
+let calmDown // Calmdown interval
+
+let anxietySpeed = 1.005
+let calmSpeed = 0.995
+let element 
+let context
+let radius = 4;  
+
 
 window.addEventListener('load', function () {
 
+  document.body.style.setProperty('--maxsize', maxSize + 'px');
+
+  // Get context
   canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
+  context = canvas.getContext('2d');
+  let start = 0; 
+  let end = Math.PI * 2; 
+  let dragging = false;
+  let margin = 100
 
-  var radius = 2;  
-  var start = 0; //起始點
-  var end = Math.PI * 2;  //結束點
-  var dragging = false;
+  // Set width and height
+  canvas.width = Math.max( document.body.clientHeight/2, document.body.clientWidth/2 - margin*2); 
+  canvas.height = canvas.width
+  context.lineWidth = radius * 2;  
 
-  canvas.width = Math.min( document.body.clientHeight, document.body.clientWidth );  //設定canvas的寬
-  canvas.height = Math.min(  document.body.clientWidth, document.body.clientHeight );  //設定canvas的高
-
-  context.lineWidth = radius * 2;  //試著改變參數，會發現裡頭有線連著
-
-  var putPoint = function(e) {
+  let putPoint = function(e) {
   	if(dragging){
 
+      // Draw on the canvas
   		context.lineTo(e.offsetX, e.offsetY);
   		context.stroke();
-  		context.beginPath(); //請把這條beginPath到fill一起看
+  		context.beginPath(); 
   		context.arc(e.offsetX, e.offsetY, radius, start, end);
-      context.fillStyle= '#999999'
-      context.strokeStyle= '#999999'
-  		context.fill();  //填滿它
+      context.fillStyle = '#999'
+      context.strokeStyle = '#999'
+  		context.fill(); 
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
       
+      // Write Gcode
       let mmX = Math.round( e.offsetX / canvas.width * maxSize ) * -1 + maxSize/2
       let mmY = Math.round( e.offsetY / canvas.height * maxSize ) - maxSize/2
 
+      // Add to the gcode
       gcode += "G01 Z1 ;X" + mmX + " Y" + mmY + " Z1\n"
 
-      anxiety*=1.005;
+      // Increase anxiety when drawing
+      if(anxiety < maxSize/2) {
+        anxiety *= anxietySpeed;
+      } else {
+        anxiety = maxSize/2
+      }
+
+      document.body.style.setProperty('--anxiety', Math.round(anxiety*10)/10 + 'px');
+      let xx =  (Math.random() * anxiety -anxiety/2) 
+      let yy = (Math.random() * anxiety  -anxiety/2) 
+
+      document.querySelector('#canvas').style.left = xx + 'px'
+      document.querySelector('#canvas').style.top = yy + 'px'
+      document.querySelector('#canvas').style.transform = 'translate( -' + xx + 'px, -' + yy + 'px )' 
+      console.log(xx, yy)
+      // visualization
+      document.querySelector('.bar').style.width = anxiety/ (maxSize/2) *100 +"vw"
 
 
-      // console.log(anxiety)
-      document.body.style.setProperty('--anxiety', anxiety + 'px');
-      document.querySelector('#canvas').style.top= (Math.random() * anxiety  -anxiety/2)  + 'px'
-      document.querySelector('#canvas').style.left = (Math.random() * anxiety -anxiety/2) + 'px'
-
-      // Making sure we are updating
+      // Making sure we are updating the sandbox
       textures.bumpMap.needsUpdate = true
       topSand.material.bumpMap.needsUpdate = true
       topSand.material.displacementMap.needsUpdate = true
-      console.log(topSand.material.bumpMap.needsUpdate)
+      // console.log(topSand.material.bumpMap.needsUpdate)
 
   	}
   }
 
-  var engage = function(e){
+  let engage = function(e){
+    
+    // Reset canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
+    calmingDown = false
   	dragging = true;
-    gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
+
+    // Start new gcode 
+    gcode = gcodeHeader
+  
+    // First Gcode point
     gcode += "G01 Z1 ;X" + ( Math.round( e.offsetX / canvas.width * maxSize ) * -1 ) + " Y" + ( Math.round( e.offsetY / canvas.height * maxSize )) + " Z1 Line Init\n"
 
-    // Making sure we are updating
+    // Update the sandbox texture
     textures.bumpMap.needsUpdate = true
     topSand.material.bumpMap.needsUpdate = true
     topSand.material.displacementMap.needsUpdate = true
-    console.log(topSand.material.bumpMap.needsUpdate)
+    // Draw the point
   	putPoint(e);
   }
 
-  var disengage = function(){
+  let disengage = function(){
+    calmingDown = true
   	dragging = false;
-    // console.log(gcode)
 
+    // Calm down a little
+    calmDown = setInterval(function() {
+        if(calmingDown) {
+          if(anxiety > 0.5 ) {
+            anxiety /= anxietySpeed
+          } else {
+            anxiety > 0.5
+          }
+          document.querySelector('.bar').style.width = anxiety/(maxSize/2)*100 +"vw"
+
+          document.body.style.setProperty('--anxiety', Math.round(anxiety*10)/10 + 'px');
+          console.log("calming down " + Math.round(anxiety*10)/10 )
+        } else {
+          clearInterval(calmDown)
+          console.log('stopped calming down')
+        }
+    }, 20)
+
+    // console.log(gcode)
   	context.beginPath();
   }
+
 
   canvas.addEventListener('mousedown', engage);
   canvas.addEventListener('mousemove', putPoint);
   canvas.addEventListener('mouseup', disengage);  
+
+  // Save the image
+  element = document.getElementById("saveimg");
+  element.addEventListener("click", saveFunction);
+
 })
 
-let element = document.getElementById("saveimg");
-element.addEventListener("click", saveFunction);
+// Resize window and canvas
+window.addEventListener('resize', function() {
+  canvas.width = Math.max( document.body.clientHeight/2, document.body.clientWidth/2 - margin*2); 
+  canvas.height = canvas.width
+  context.lineWidth = radius * 2;  
+
+})
+
 
 function fillCanvasBackgroundWithColor(canvas, color) {
+ 
   // Get the 2D drawing context from the provided canvas.
   const context = canvas.getContext('2d');
-
-  // We're going to modify the context state, so it's
-  // good practice to save the current state first.
   context.save();
-
-  // Normally when you draw on a canvas, the new drawing
-  // covers up any previous drawing it overlaps. This is
-  // because the default `globalCompositeOperation` is
-  // 'source-over'. By changing this to 'destination-over',
-  // our new drawing goes behind the existing drawing. This
-  // is desirable so we can fill the background, while leaving
-  // the chart and any other existing drawing intact.
-  // Learn more about `globalCompositeOperation` here:
-  // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
   context.globalCompositeOperation = 'destination-over';
-
-  // Fill in the background. We do this by drawing a rectangle
-  // filling the entire canvas, using the provided color.
   context.fillStyle = '#ffffff33';
   context.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Restore the original context state from `context.save()`
   context.restore();
 }
-const fs = require('fs')
+
+// let fs = require('fs')
 
 function download(filename, text) {
-  var element = document.createElement('a');
+  let element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
   element.setAttribute('download', filename);
 
