@@ -1,3 +1,8 @@
+const gui = new dat.GUI({ closed: false, width: 200 });
+const colorFolder = gui.addFolder("Sand Color");
+const displaceFolder = gui.addFolder("Displacement");
+const lightFolder = gui.addFolder("Light");
+
 
 var drawingCanvas = document.getElementById('canvas');
 var drawingContext = drawingCanvas.getContext('2d');
@@ -181,6 +186,45 @@ var controls = new THREE.OrbitControls( camera, renderer.domElement );
 camera.position.z = 0;
 camera.position.y = 10;
 camera.rotation.x = -1*Math.PI / 2;
+
+/* GUI */
+// Surface Color
+
+colorFolder
+  .addColor(debugObject, "sandSurfaceColor")
+  .onChange(() => {
+topSand.material.color.setHex(debugObject.sandSurfaceColor.replace("#", "0x"));
+  });
+colorFolder
+  .addColor(debugObject, "sandBottomColor")
+  .onChange(() => {
+    bottomSand.material.color
+      .setHex(debugObject.sandBottomColor.replace("#", "0x"));
+  });
+
+// Displacement
+displaceFolder
+  .add(topSand.material, 'displacementBias', -1, 1, 0.01)
+  .name("Bias")
+displaceFolder
+  .add(topSand.material, 'displacementScale', -1, 1, 0.01)
+  .onChange(() => {updateMaterial(topSand)})
+  .name("Scale")
+displaceFolder
+  .open()
+
+// Light
+lightFolder.add(dirLight.position, 'x', 0, 15)
+lightFolder.add(dirLight.position, 'y', 0, 15)
+lightFolder.add(dirLight.position, 'z', 0, 15)
+lightFolder.add(dirLight, 'intensity', 0, 5, 0.01)
+           .name("Dir intsty")
+lightFolder.add(hemiLight, 'intensity', 0, 5, 0.01)
+           .name("Hemi intsty")
+lightFolder.open()
+
+
+
 
 function updateMaterial(object) {
     object.material.side = Number(object.material.side)
