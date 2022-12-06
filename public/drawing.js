@@ -13,8 +13,8 @@ window.addEventListener('load', function () {
   var end = Math.PI * 2;  //結束點
   var dragging = false;
 
-  canvas.width = document.body.clientWidth;  //設定canvas的寬
-  canvas.height = document.body.clientHeight;  //設定canvas的高
+  canvas.width = Math.min( document.body.clientHeight, document.body.clientWidth );  //設定canvas的寬
+  canvas.height = Math.min(  document.body.clientWidth, document.body.clientHeight );  //設定canvas的高
 
   context.lineWidth = radius * 2;  //試著改變參數，會發現裡頭有線連著
 
@@ -31,8 +31,8 @@ window.addEventListener('load', function () {
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
       
-      let mmX = Math.round( e.offsetX / canvas.width * maxSize ) * -1
-      let mmY = Math.round( e.offsetY / canvas.height * maxSize )
+      let mmX = Math.round( e.offsetX / canvas.width * maxSize ) * -1 + maxSize/2
+      let mmY = Math.round( e.offsetY / canvas.height * maxSize ) - maxSize/2
 
       gcode += "G01 Z1 ;X" + mmX + " Y" + mmY + " Z1\n"
 

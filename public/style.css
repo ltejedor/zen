@@ -95,16 +95,18 @@ canvas[hidden] {
 
 #canvas {
   border: none;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
+  width: 100vmin;
+  height: 100vmin;
+  
+  position: relative;
   z-index: 0;
   background: transparent;
   top: 0;
-  left: 0;
+  margin-left: 25%;
   bottom: 0;
   right: 0;
   z-index: 1;
+
 
 }
 
