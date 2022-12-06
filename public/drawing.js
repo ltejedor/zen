@@ -1,7 +1,6 @@
 let anxiety = 0.5;
 let gcode = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
 let maxSize = 420
-var gcode_contents = "Hello World!";
 
 window.addEventListener('load', function () {
 
@@ -95,14 +94,12 @@ function fillCanvasBackgroundWithColor(canvas, color) {
 
   // Fill in the background. We do this by drawing a rectangle
   // filling the entire canvas, using the provided color.
-  context.fillStyle = color;
+  context.fillStyle = '#ffffff33';
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   // Restore the original context state from `context.save()`
   context.restore();
 }
-
-// var img2gcode = require('img2gcode')
 const fs = require('fs')
 
 function download(filename, text) {
@@ -118,14 +115,14 @@ function download(filename, text) {
   document.body.removeChild(element);
 }
 
+
+
 function saveFunction() {
 
-  filename = document.getElementById("savename").value;
+  // filename = document.getElementById("savename").value;
+  filename = "zenbot";
   if (filename.length>0){
     savename = filename + ".gcode";
-    download(savename, gcode_contents)
+    download(savename, gcode)
   }
-
-
-
 }

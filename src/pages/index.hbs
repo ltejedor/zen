@@ -31,8 +31,8 @@
 				<p id="textbox"></p>
 
         <div class="form">
-          <p id="textbox">Enter File Name for GCode: </p>
-          <input type="text" id="savename" name="savename">
+          {{!-- <p id="textbox">Enter File Name for GCode: </p> --}}
+          {{!-- <input type="text" id="savename" name="savename"> --}}
           <button id="saveimg" onclick="saveFunction()">Download GCode</button>
         </div>
 
@@ -69,6 +69,25 @@
 				c-45,25-85.7,57-128.9,85c-10.3,6.7-62.4,44.9-140.3,44.9H-4.5"/>
 			 </svg>
 
+
+    <script>
+    //  let input = document.getElementById("savename");
+    //  let button = document.getElementById("saveimg");
+
+    //  button.disabled = true; //setting button state to disabled
+
+    //  input.addEventListener("keyup", stateHandle);
+
+    //  function stateHandle() {
+    //      if (document.getElementById("savename").value === "") {
+    //          button.disabled = true; //button remains disabled
+    //      } else {
+    //          button.disabled = false; //button is enabled
+    //          console.log("enabled button")
+    //      }
+
+    //  }
+    </script>
 		</div>
 	</body>
 </html>
