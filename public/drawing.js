@@ -189,7 +189,7 @@ function saveFunction() {
 
 
 function copyFunction() {
-  document.getElementById("gcode-text").innerText = gcode;
+  document.getElementById("gcode-text").value = gcode;
   document.getElementById("gcode-text").focus();
   document.getElementById("gcode-text").select();
   document.execCommand('copy');
