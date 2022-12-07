@@ -1,0 +1,153 @@
+let sqrt_2_over_2 = 0.70710678118
+
+let corexy = createSynchronizer([motora, motorb])
+console.log(corexy)
+
+motora.setCurrentScale(0.55)
+motora.setStepsPerUnit(10)
+motorb.setCurrentScale(0.55)
+motorb.setStepsPerUnit(10)
+
+let gcode_1 = `G01 Z1 ;X-101 Y153 Z1 Line Init
+G01 Z1 ;X109 Y-57 Z1
+G01 Z1 ;X108 Y-57 Z1
+G01 Z1 ;X107 Y-57 Z1
+G01 Z1 ;X107 Y-56 Z1
+G01 Z1 ;X107 Y-54 Z1
+G01 Z1 ;X107 Y-48 Z1
+G01 Z1 ;X103 Y-33 Z1
+G01 Z1 ;X101 Y-27 Z1
+G01 Z1 ;X96 Y-14 Z1
+G01 Z1 ;X90 Y4 Z1
+G01 Z1 ;X84 Y22 Z1
+G01 Z1 ;X77 Y42 Z1
+G01 Z1 ;X74 Y56 Z1
+G01 Z1 ;X74 Y60 Z1
+G01 Z1 ;X74 Y63 Z1
+G01 Z1 ;X73 Y68 Z1
+G01 Z1 ;X73 Y73 Z1
+G01 Z1 ;X73 Y75 Z1
+G01 Z1 ;X75 Y75 Z1
+G01 Z1 ;X80 Y75 Z1
+G01 Z1 ;X88 Y74 Z1
+G01 Z1 ;X99 Y71 Z1
+G01 Z1 ;X116 Y63 Z1
+G01 Z1 ;X135 Y51 Z1
+G01 Z1 ;X162 Y32 Z1
+G01 Z1 ;X165 Y29 Z1
+G01 Z1 ;X173 Y19 Z1
+G01 Z1 ;X181 Y11 Z1
+G01 Z1 ;X184 Y4 Z1
+G01 Z1 ;X189 Y-4 Z1
+G01 Z1 ;X191 Y-10 Z1
+G01 Z1 ;X190 Y-17 Z1
+G01 Z1 ;X184 Y-25 Z1
+G01 Z1 ;X169 Y-35 Z1
+G01 Z1 ;X147 Y-44 Z1
+G01 Z1 ;X117 Y-52 Z1
+G01 Z1 ;X82 Y-59 Z1
+G01 Z1 ;X52 Y-63 Z1
+G01 Z1 ;X25 Y-63 Z1
+G01 Z1 ;X-5 Y-63 Z1
+G01 Z1 ;X-26 Y-63 Z1
+G01 Z1 ;X-42 Y-58 Z1
+G01 Z1 ;X-48 Y-56 Z1
+G01 Z1 ;X-58 Y-51 Z1
+G01 Z1 ;X-64 Y-48 Z1
+G01 Z1 ;X-68 Y-44 Z1
+G01 Z1 ;X-69 Y-40 Z1
+G01 Z1 ;X-69 Y-37 Z1
+G01 Z1 ;X-63 Y-31 Z1
+G01 Z1 ;X-53 Y-23 Z1
+G01 Z1 ;X-42 Y-16 Z1
+G01 Z1 ;X-35 Y-11 Z1
+G01 Z1 ;X-29 Y-9 Z1
+G01 Z1 ;X-25 Y-6 Z1
+G01 Z1 ;X-21 Y-3 Z1
+G01 Z1 ;X-17 Y-2 Z1
+G01 Z1 ;X-16 Y0 Z1
+G01 Z1 ;X-14 Y2 Z1
+G01 Z1 ;X-14 Y2 Z1
+G01 Z1 ;X-17 Y2 Z1
+G01 Z1 ;X-21 Y3 Z1
+G01 Z1 ;X-31 Y5 Z1
+G01 Z1 ;X-48 Y9 Z1
+G01 Z1 ;X-66 Y14 Z1
+G01 Z1 ;X-83 Y20 Z1
+G01 Z1 ;X-95 Y23 Z1
+G01 Z1 ;X-103 Y26 Z1
+G01 Z1 ;X-111 Y29 Z1
+G01 Z1 ;X-117 Y31 Z1
+G01 Z1 ;X-122 Y32 Z1
+G01 Z1 ;X-125 Y34 Z1
+G01 Z1 ;X-127 Y36 Z1
+G01 Z1 ;X-128 Y37 Z1
+G01 Z1 ;X-125 Y41 Z1
+G01 Z1 ;X-115 Y48 Z1
+G01 Z1 ;X-76 Y69 Z1
+G01 Z1 ;X-69 Y74 Z1
+G01 Z1 ;X-48 Y84 Z1
+G01 Z1 ;X-29 Y92 Z1
+G01 Z1 ;X-11 Y97 Z1
+G01 Z1 ;X8 Y102 Z1
+G01 Z1 ;X23 Y103 Z1
+G01 Z1 ;X34 Y100 Z1
+G01 Z1 ;X44 Y90 Z1
+G01 Z1 ;X50 Y70 Z1
+G01 Z1 ;X51 Y47 Z1
+G01 Z1 ;X48 Y23 Z1
+G01 Z1 ;X42 Y2 Z1
+G01 Z1 ;X30 Y-21 Z1
+G01 Z1 ;X16 Y-46 Z1
+G01 Z1 ;X4 Y-62 Z1
+G01 Z1 ;X-3 Y-68 Z1
+G01 Z1 ;X-10 Y-74 Z1
+G01 Z1 ;X-17 Y-80 Z1
+G01 Z1 ;X-26 Y-84 Z1
+G01 Z1 ;X-26 Y-84 Z1
+G01 Z1 ;X-28 Y-84 Z1
+G01 Z1 ;X-30 Y-84 Z1
+G01 Z1 ;X-31 Y-84 Z1
+G01 Z1 ;X-31 Y-82 Z1
+G01 Z1 ;X-29 Y-79 Z1
+G01 Z1 ;X-24 Y-76 Z1
+G01 Z1 ;X-20 Y-73 Z1
+G01 Z1 ;X-16 Y-71 Z1
+G01 Z1 ;X-12 Y-69 Z1
+G01 Z1 ;X-8 Y-68 Z1
+G01 Z1 ;X-6 Y-66 Z1
+G01 Z1 ;X-3 Y-66 Z1
+G01 Z1 ;X-1 Y-66 Z1
+G01 Z1 ;X0 Y-66 Z1
+G01 Z1 ;X0 Y-69 Z1
+G01 Z1 ;X0 Y-69 Z1
+G01 Z1 ;X-1 Y-71 Z1
+G01 Z1 ;X-2 Y-73 Z1
+G01 Z1 ;X-4 Y-75 Z1
+G01 Z1 ;X-6 Y-76 Z1`
+// let gcode = "G01 Z1 ;X-100 Y100 Z1\nG01 Z1 ;X100 Y100 Z1\nG01 Z1 ;X100 Y-100 Z1\nG01 Z1 ;X-100 Y-100 Z1"
+// let gcode = "G01 Z1 ;X0 Y0 Z1\nG01 Z1 ;X80 Y0 Z1\nG01 Z1 ;X0 Y80 Z1"
+let lines = gcode.split('\n')
+
+console.log(lines)
+
+for(let i = 0; i < lines.length; i += 1){
+  let line = lines[i]
+  coords = line.split(' ')
+
+  console.log(coords)
+
+  x = parseFloat(coords[2].replace(';X', ''))
+  y = parseFloat(coords[3].replace('Y', ''))
+
+  // coord = [x + y, x - y]
+  coord = [sqrt_2_over_2 * (x + y), sqrt_2_over_2 * (x - y)]
+
+  // console.log(coord)
+  // coord = [x, y]
+
+  console.log([x, y])
+  await corexy.absolute(coord, 500, 1000)
+}
+
+
