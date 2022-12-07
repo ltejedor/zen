@@ -136,6 +136,9 @@ window.addEventListener('load', function () {
   element = document.getElementById("saveimg");
   element.addEventListener("click", saveFunction);
 
+  element = document.getElementById("copycode");
+  element.addEventListener("click", copyFunction);
+
 })
 
 // Resize window and canvas
@@ -182,4 +185,12 @@ function saveFunction() {
     savename = filename + ".gcode";
     download(savename, gcode)
   }
+}
+
+
+function copyFunction() {
+  document.getElementById("gcode-text").innerText = gcode;
+  document.getElementById("gcode-text").focus();
+  document.getElementById("gcode-text").select();
+  document.execCommand('copy');
 }
