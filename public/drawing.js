@@ -1,6 +1,7 @@
 let anxiety = 0.5;
-let gcodeHeader = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
-let gcode = gcodeHeader
+// let gcodeHeader = ";---> this code is for cnc-ino <---\n; Img Size: (500,500)pixel to (500,500)mm\n; Process Error: 75.92%\n; Tool Diameter: 10\n; Scale Axes: 500\n; Deep Step: -1\n; Z Save: 1\n; Z White: 0\n; Z Black: -1\nG21 ; Set units to mm\nG90 ; Absolute positioning\n"
+// let gcode = gcodeHeader
+// let gcode = "\n"
 let maxSize = 420
 
 let calmingDown = false
@@ -14,9 +15,6 @@ let radius = 4;
 
 
 window.addEventListener('load', function () {
-
-
-
 
   document.body.style.setProperty('--maxsize', maxSize + 'px');
 
@@ -89,7 +87,7 @@ window.addEventListener('load', function () {
   	dragging = true;
 
     // Start new gcode
-    gcode = gcodeHeader
+    gcode = ""
 
     // First Gcode point
     gcode += "G01 Z1 ;X" + ( Math.round( e.offsetX / canvas.width * maxSize ) * -1 ) + " Y" + ( Math.round( e.offsetY / canvas.height * maxSize )) + " Z1 Line Init\n"
@@ -182,14 +180,14 @@ function saveFunction() {
   // filename = document.getElementById("savename").value;
   filename = "zenbot";
   if (filename.length>0){
-    savename = filename + ".gcode";
+    savename = filename + ".txt";
     download(savename, gcode)
   }
 }
 
-
 function copyFunction() {
-  document.getElementById("gcode-text").value = gcode;
+  new_gcode = gcode.replace('X','H')
+  document.getElementById("gcode-text").value = new_gcode;
   document.getElementById("gcode-text").focus();
   document.getElementById("gcode-text").select();
   document.execCommand('copy');

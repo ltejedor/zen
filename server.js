@@ -7,10 +7,8 @@ const path = require("path");
 
 const http = require('http');
 
-
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 7071 });
-
+// const WebSocket = require('ws');
+// const wss = new WebSocket.Server({ port: 7071 });
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
@@ -67,6 +65,8 @@ fastify.get("/", function (request, reply) {
 fastify.post("/", function (request, reply) {
   // Build the params object to pass to the template
   let params = { seo: seo };
+
+  // wss.send(outgoingMessage);
 
   return reply.view("/src/pages/index.hbs", params);
 });

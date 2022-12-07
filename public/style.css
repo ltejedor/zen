@@ -60,6 +60,10 @@ canvas[hidden] {
   display: none !important;
 
 }
+
+textarea {
+  white-space: pre-wrap;
+}
 /*@keyframes wiggle {
   0% {
     transform:  translate(0vw, 0vh);
