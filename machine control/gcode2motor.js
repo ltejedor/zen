@@ -11,7 +11,13 @@ motorb.setStepsPerUnit(20)
 // let gcode = "
   
 // "
-let gcode = "G01 X0 Y0 Z1\nG01 X50 Y0 Z1\nG01 X0 Y50 Z1"
+let gcode = " "
+
+import re
+
+file = open('zenbot.gcode', 'r')
+gcode = file.readlines()
+
 let lines = gcode.split('\n')
 
 for(let i = 0; i < lines.length; i += 1){
