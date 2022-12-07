@@ -14,7 +14,9 @@
     "gcode-context": "^1.0.2",
     "handlebars": "^4.7.7",
     "img2gcode": "^1.2.0",
-    "progress": "^2.0.3"
+    "progress": "^2.0.3",
+    "socket.io": "^4.5.4",
+    "ws": "^8.11.0"
   },
   "engines": {
     "node": "14.x"

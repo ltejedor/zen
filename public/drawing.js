@@ -8,27 +8,30 @@ let calmDown // Calmdown interval
 
 let anxietySpeed = 1.005
 let calmSpeed = 0.995
-let element 
+let element
 let context
-let radius = 4;  
+let radius = 4;
 
 
 window.addEventListener('load', function () {
+
+
+
 
   document.body.style.setProperty('--maxsize', maxSize + 'px');
 
   // Get context
   canvas = document.getElementById('canvas');
   context = canvas.getContext('2d');
-  let start = 0; 
-  let end = Math.PI * 2; 
+  let start = 0;
+  let end = Math.PI * 2;
   let dragging = false;
   let margin = 100
 
   // Set width and height
-  canvas.width = Math.max( document.body.clientHeight/2, document.body.clientWidth/2 - margin*2); 
+  canvas.width = Math.max( document.body.clientHeight/2, document.body.clientWidth/2 - margin*2);
   canvas.height = canvas.width
-  context.lineWidth = radius * 2;  
+  context.lineWidth = radius * 2;
 
   let putPoint = function(e) {
   	if(dragging){
@@ -36,14 +39,14 @@ window.addEventListener('load', function () {
       // Draw on the canvas
   		context.lineTo(e.offsetX, e.offsetY);
   		context.stroke();
-  		context.beginPath(); 
+  		context.beginPath();
   		context.arc(e.offsetX, e.offsetY, radius, start, end);
       context.fillStyle = '#999'
       context.strokeStyle = '#999'
-  		context.fill(); 
+  		context.fill();
   		context.beginPath();
   		context.moveTo(e.offsetX, e.offsetY);
-      
+
       // Write Gcode
       let mmX = Math.round( e.offsetX / canvas.width * maxSize ) * -1 + maxSize/2
       let mmY = Math.round( e.offsetY / canvas.height * maxSize ) - maxSize/2
@@ -59,16 +62,15 @@ window.addEventListener('load', function () {
       }
 
       document.body.style.setProperty('--anxiety', Math.round(anxiety*10)/10 + 'px');
-      let xx =  (Math.random() * anxiety -anxiety/2) 
-      let yy = (Math.random() * anxiety  -anxiety/2) 
+      let xx =  (Math.random() * anxiety -anxiety/2)
+      let yy = (Math.random() * anxiety  -anxiety/2)
 
       document.querySelector('#canvas').style.left = xx + 'px'
       document.querySelector('#canvas').style.top = yy + 'px'
-      document.querySelector('#canvas').style.transform = 'translate( -' + xx + 'px, -' + yy + 'px )' 
+      document.querySelector('#canvas').style.transform = 'translate( -' + xx + 'px, -' + yy + 'px )'
       console.log(xx, yy)
       // visualization
       document.querySelector('.bar').style.width = anxiety/ (maxSize/2) *100 +"vw"
-
 
       // Making sure we are updating the sandbox
       textures.bumpMap.needsUpdate = true
@@ -80,15 +82,15 @@ window.addEventListener('load', function () {
   }
 
   let engage = function(e){
-    
+
     // Reset canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
     calmingDown = false
   	dragging = true;
 
-    // Start new gcode 
+    // Start new gcode
     gcode = gcodeHeader
-  
+
     // First Gcode point
     gcode += "G01 Z1 ;X" + ( Math.round( e.offsetX / canvas.width * maxSize ) * -1 ) + " Y" + ( Math.round( e.offsetY / canvas.height * maxSize )) + " Z1 Line Init\n"
 
@@ -126,10 +128,9 @@ window.addEventListener('load', function () {
   	context.beginPath();
   }
 
-
   canvas.addEventListener('mousedown', engage);
   canvas.addEventListener('mousemove', putPoint);
-  canvas.addEventListener('mouseup', disengage);  
+  canvas.addEventListener('mouseup', disengage);
 
   // Save the image
   element = document.getElementById("saveimg");
@@ -139,15 +140,14 @@ window.addEventListener('load', function () {
 
 // Resize window and canvas
 window.addEventListener('resize', function() {
-  canvas.width = Math.max( document.body.clientHeight/2, document.body.clientWidth/2 - margin*2); 
+  canvas.width = Math.max( document.body.clientHeight/2, document.body.clientWidth/2 - margin*2);
   canvas.height = canvas.width
-  context.lineWidth = radius * 2;  
-
+  context.lineWidth = radius * 2;
 })
 
 
 function fillCanvasBackgroundWithColor(canvas, color) {
- 
+
   // Get the 2D drawing context from the provided canvas.
   const context = canvas.getContext('2d');
   context.save();

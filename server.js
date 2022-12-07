@@ -5,6 +5,13 @@
 
 const path = require("path");
 
+const http = require('http');
+
+
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 7071 });
+
+
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
   // Set this to true for detailed logging:
@@ -120,5 +127,6 @@ fastify.listen(
     }
     console.log(`Your app is listening on ${address}`);
     fastify.log.info(`server listening on ${address}`);
+
   }
 );
