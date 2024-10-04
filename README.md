@@ -1,4 +1,4 @@
-# zen app - machine building week
+# zen app - machine building week (how to make almost anything, mit)
 
 This project includes a Node.js server script and a web page that connects to it.
 
